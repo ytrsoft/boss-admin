@@ -1,17 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 
-import { AppView } from 'src/sections/overview/view';
+import Container from "@mui/material/Container";
 
 // ----------------------------------------------------------------------
 
 export default function AppPage() {
   return (
     <>
-      <Helmet>
-        <title> Dashboard | Minimal UI </title>
-      </Helmet>
+        <Helmet>
+            <title> 后台管理系统 </title>
+        </Helmet>
 
-      <AppView />
+        <Container maxWidth="xl">
+            <h1>Hello</h1>
+        </Container>
     </>
   );
 }
