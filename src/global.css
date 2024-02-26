@@ -1,2 +1,5 @@
 /* scrollbar */
 @import 'simplebar-react/dist/simplebar.min.css';
+.MuiToolbar-root {
+    border-bottom: dashed 1px rgba(145, 158, 171, 0.2);
+}
