@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react'
 
 const useDate = (): string => {
   const fmt = 'EEEE yyyy-MM-dd HH:mm:ss'
-  const genValue = () => format(new Date(), fmt, { locale: zhCN })
-  const [date, setDate] = useState(genValue())
+  const genValue = (): string => format(new Date(), fmt, { locale: zhCN })
+  const [date, setDate] = useState<string>(genValue())
   useEffect(() => {
     const timer = setInterval(() => {
       setDate(genValue())
