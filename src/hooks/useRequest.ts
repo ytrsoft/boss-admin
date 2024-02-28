@@ -1,7 +1,7 @@
 
 import axios, { AxiosRequestConfig } from 'axios'
 import { useState, useEffect } from 'react'
-import { REST_API } from '../common/config'
+import { REST_API } from '../common/config.ts'
 
 type Method = 'get' | 'post' | 'delete' | 'put'
 
