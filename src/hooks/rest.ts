@@ -25,18 +25,20 @@ interface BaseEntity {
   created?: string; 
   updated?: string; 
   deleted?: boolean;
-  _links?: Links
+  _links?: Links;
+  _embedded?: any;
+  page?: Page;
 }
 
 interface Embedded<T> {
   [key: string]: T | T[];
 }
 
-interface Page {
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  number: number;
+export interface Page {
+  size?: number;
+  totalElements?: number;
+  totalPages?: number;
+  number?: number;
 }
 
 interface PageEntity<T extends BaseEntity> {
@@ -62,10 +64,6 @@ export interface Params {
 export interface UpdateParams {
   search: any;
   data: any;
-}
-
-const isLink = (url: string): boolean => {
-  return url.startsWith('http://') || url.startsWith('https://');
 }
 
 const buildRestUri = (params: any): string => {
@@ -108,23 +106,23 @@ const buildQuerySearch = (params?: Params): string => {
 
 export const useRead = <E extends BaseEntity>(endpoint: string, params?: Params): FetchState<Query<E>> => {
   const search = buildQuerySearch(params)
-  const url = isLink(endpoint) ? endpoint : `/${endpoint}${search}`
+  const url = `/${endpoint}${search}`
   return useRequest({ url, method: 'get' })
 }
 
 export const useCreate = <E extends BaseEntity>(endpoint: string, params: E): FetchState<E> => {
-  const url = isLink(endpoint) ? endpoint : `/${endpoint}`
+  const url = `/${endpoint}`
   return useRequest({ url, method: 'post', data: params })
 }
 
 export const useUpdate = <E extends BaseEntity>(endpoint: string, params: UpdateParams): FetchState<E> => {
   const uri = buildRestUri(params.search)
-  const url = isLink(endpoint) ? endpoint : `/${endpoint}/${uri}`
+  const url = `/${endpoint}/${uri}`
   return useRequest({ url, method: 'put', data: params.data })
 }
 
 export const useDelete = (endpoint: string, params: any): FetchState<any> => {
   const uri = buildRestUri(params)
-  const url = isLink(endpoint) ? endpoint : `/${endpoint}/${uri}`
+  const url = `/${endpoint}/${uri}`
   return useRequest({ url, method: 'delete' })
 }

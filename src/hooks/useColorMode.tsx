@@ -7,7 +7,7 @@ const useColorMode = () => {
   useEffect(() => {
     const className = 'dark';
     const bodyClass = window.document.body.classList;
-
+    document.querySelector('html')?.setAttribute('data-theme', colorMode)
     colorMode === 'dark'
       ? bodyClass.add(className)
       : bodyClass.remove(className);

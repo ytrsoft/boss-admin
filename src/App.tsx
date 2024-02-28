@@ -5,10 +5,11 @@ import Loader from './common/Loader';
 import Home from './pages/Home';
 import { dataRoutes, RouteConfig } from './common/router'
 import Dynamic from './common/Dynamic'
-
+import { GlobalContext, useGlobalContext } from './hooks/useGlobal'
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const global  = useGlobalContext()
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -17,10 +18,10 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return loading ? (
+  return (loading && global.loading) ? (
     <Loader />
   ) : (
-    <>
+    <GlobalContext.Provider value={global.value}>
       <Routes>
         <Route
           path="/"
@@ -38,7 +39,7 @@ function App() {
           ))
         }
       </Routes>
-    </>
+    </GlobalContext.Provider>
   );
 }
 

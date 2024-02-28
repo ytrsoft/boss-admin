@@ -1,13 +1,13 @@
 
 import axios, { AxiosRequestConfig } from 'axios'
 import { useState, useEffect } from 'react'
-import { REST_API } from '../common/config.ts'
+import { REST_API, BASE_URL } from '../common/config.ts'
 
 type Method = 'get' | 'post' | 'delete' | 'put'
 
 export interface RequestConfig {
   url: string
-  method: Method
+  method?: Method
   params?: any
   data?: any
 }
@@ -30,21 +30,34 @@ const createAxiosConfig = (config: RequestConfig): AxiosRequestConfig => {
   }
 }
 
+const isLink = (url: string): boolean => {
+  return url.startsWith('http://') || url.startsWith('https://');
+}
+
+export const newRequest = (config: RequestConfig): any => {
+  if (isLink(config.url)) {
+    config.url = config.url.replace(BASE_URL + REST_API, '')
+  }
+  const cfg = createAxiosConfig(config)
+  const method: Method = config.method || 'get'
+  return _axios[method](config.url, cfg)
+}
+
 export const useRequest = <T>(config: RequestConfig): FetchState<T> => {
   const [data, setData] = useState<T>()
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
+  const deps: any[] = [config.params, config.data, config.url]
   useEffect(() => {
-    const cfg = createAxiosConfig(config)
-    const request = _axios[config.method](config.url, cfg)
+    const request = newRequest(config)
     request.then((res: any) => {
       setData(res.data)
-    }).catch((e) => {
+    }).catch((e: Error) => {
       setError(e)
     }).finally(() => {
       setLoading(false)
     })
-  }, [config.params, config.data])
+  }, deps)
 
   return { data, error, loading }
 }

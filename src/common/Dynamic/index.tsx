@@ -7,7 +7,7 @@ function Dynamic(props: any) {
   })
   return (
     <Suspense>
-      <Element/>
+      <Element {...props} />
     </Suspense>
   )
 }

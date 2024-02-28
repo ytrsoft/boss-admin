@@ -1,15 +1,10 @@
+import DataTable from '../components/DataTable'
+
 import React from 'react';
 
-import DefaultLayout from '../layout/DefaultLayout';
-import { useRead } from '../hooks/rest'
-
-
-const Projects: React.FC = () => {
-  const { data } = useRead('projects')
+const Projects: React.FC = (props: any) => {
   return (
-    <DefaultLayout>
-      <h1>{ JSON.stringify(data, null, 2) }</h1>
-    </DefaultLayout>
+    <DataTable name={props.name} />
   );
 };
 

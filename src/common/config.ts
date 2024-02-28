@@ -1,21 +1,10 @@
 
 export const REST_API = '/api'
+export const BASE_URL = 'http://192.168.31.254:8080'
 
-export const ENTITIES = [
-  {
-    name: 'jobs',
-    value: '工作'
-  },
-  {
-    name: 'companies',
-    value: '公司'
-  },
-  {
-    name: 'addresses',
-    value: '地址'
-  },
-  {
-    name: 'projects',
-    value: '项目'
-  }
+export const EXCLUDE_KEY = [
+  'id',
+  'created',
+  'updated',
+  'deleted'
 ]
